@@ -21,8 +21,7 @@ public class ItemController {
     @GetMapping("/list")
     public String list(Model model) { // Thymeleaf 를 사용하기 위한 Model 객체를 전달
         var result = itemRepository.findAll(); // List<Item> 자료형
-        System.out.println(result.get(0));
-        model.addAttribute("name", "홍길동"); // name 에 홍길동을 저장 -> html 에서 ${name} 으로 사용가능
+        model.addAttribute("items", result); // name 에 홍길동을 저장 -> html 에서 ${name} 으로 사용가능
         return "list.html";
     }
 }

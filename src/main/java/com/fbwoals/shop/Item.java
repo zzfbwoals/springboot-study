@@ -1,8 +1,10 @@
 package com.fbwoals.shop;
 
 import jakarta.persistence.*;
+import lombok.ToString;
 
 @Entity // 이 애너테이션만 넣으면 JPA 엔터티 (DB 테이블) 완성
+@ToString // Object 를 출력할때 .title 이런거 안붙이면 이상한 값 나오는데 .toString() 으로 모든 속성 값이 나오도록 해줌
 public class Item {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // 키 값 (Primary Key), 자동 증가 (Auto Increment) 설정
     public Long id; // private 사용하고 Lombok 의 @Getter/@Setter 사용 @Setter는 유효성 검사를 위해 롬복대신 직접 함수 만들어서 검사하는 코드 추가하면 좋음
