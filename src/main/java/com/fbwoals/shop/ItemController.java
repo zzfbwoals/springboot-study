@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequiredArgsConstructor // Lombok 에서 제공 (덕분에 @Autowired 안써도 됨)
@@ -23,5 +25,18 @@ public class ItemController {
         var result = itemRepository.findAll(); // List<Item> 자료형
         model.addAttribute("items", result); // name 에 홍길동을 저장 -> html 에서 ${name} 으로 사용가능
         return "list.html";
+    }
+
+    @GetMapping("/write")
+    public String write() {
+        return "write.html";
+    }
+
+    @PostMapping("/add")
+    public String add(String title, Integer price) { // @RequestParam 생략
+        Item item = new Item();
+        item.setTitle(title); item.setPrice(price);
+        itemRepository.save(item);
+        return "redirect:/list"; // ajax 요청일 경우 불가능
     }
 }
