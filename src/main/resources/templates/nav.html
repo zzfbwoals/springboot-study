@@ -11,8 +11,8 @@
 
 <div class="nav" th:fragment="navbar"> <!-- th:fragment="작명" 으로 다른 html 에서 재사용 가능 -->
     <a class="logo">SpringMall</a>
-    <a>List</a>
-    <a>Write</a>
+    <a th:href="@{'/list'}">List</a>
+    <a th:href="@{'/write'}">Write</a>
 </div>
 
 </body>

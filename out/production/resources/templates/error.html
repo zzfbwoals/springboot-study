@@ -9,11 +9,13 @@
 </head>
 <body>
 
-<div class="nav" th:fragment="navbar"> <!-- th:fragment="작명" 으로 다른 html 에서 재사용 가능 -->
-    <a class="logo">SpringMall</a>
-    <a th:href="@{'/list'}">List</a>
-    <a th:href="@{'/write'}">Write</a>
-</div>
+<!-- thymleaf 에서는 error.html 만들어두면 에러 발생 시 알아서 error.html 으로 리다이렉트 됨 -->
+<div>에러페이지임</div>
+<p th:text="${status}"></p>
+<p th:text="${error}"></p>
+<p th:text="${path}"></p>
+<p th:text="${message}"></p>
+<p th:text="${exception}"></p>
 
 </body>
 </html>
