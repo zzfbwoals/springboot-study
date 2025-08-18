@@ -49,6 +49,7 @@ public class ItemController {
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
+
         var result = itemRepository.findById(id);
         // Optional 자료형은 null 일수도 있어서 if 문으로 null 체크 필수 -> 안써도 알아서 잡아주긴 함
         if(result.isPresent()) {
@@ -57,4 +58,15 @@ public class ItemController {
         }
         else return "redirect:/list";
     }
+
+//    에러 처리 방법
+//    @GetMapping("/detail/{id}")
+//    ResponseEntity<String> detail() {
+//        try {
+//            throw new Exception("이런저런에러");
+//        } catch(Exception e){
+//            return ResponseEntity.status(에러코드).body("에러이유");
+//            // ResponseEntity를 쓰는 경우 굳이 @ResponseBody를 붙일 필요 없습니다. 한글 보낼 때 안깨지는 것도 편리함
+//        }
+//    }
 }

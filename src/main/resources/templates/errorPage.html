@@ -9,7 +9,12 @@
 </head>
 <body>
 
-<!-- thymleaf 에서는 error.html 만들어두면 에러 발생 시 알아서 error.html 으로 리다이렉트 됨 -->
+<!--
+thymleaf 에서는 errorPage.html 만들어두면 에러 발생 시 알아서 error.html 으로 리다이렉트 됨
+하지만 서버에서 데이터만 보내주는 REST API 들을 만드는경우에는 html 에러페이지를 보내봤자 아무 의미가 없음.
+서버와 유저가 데이터만 주고받는 관계라서 html 보내봤자 열지도 못함.
+그래서 다른 방법이 필요
+-->
 <div>에러페이지임</div>
 <p th:text="${status}"></p>
 <p th:text="${error}"></p>
