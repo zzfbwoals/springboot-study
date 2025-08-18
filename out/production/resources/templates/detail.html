@@ -5,17 +5,20 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>상품추가</title>
+    <title>상세페이지</title>
+    <link href="/main.css" rel="stylesheet">
+
 </head>
 <body>
 
 <div th:replace="~{nav.html :: navbar}"></div>
 
-<form action="/add" method="POST"> <!-- action="/URL" mothod="요청" -->
-    <input name="title">
-    <input name="price">
-    <button type="submit">버튼</button> <!-- type="button" 은 ajax 사용할때 -->
-</form>
+<div class="detail">
+    <h4>상세페이지</h4>
+    <img src="https://placehold.co/300">
+    <h4 th:text="${item.title}"></h4>
+    <h4 th:text="${item.price} + 원"></h4>
+</div>
 
 </body>
 </html>

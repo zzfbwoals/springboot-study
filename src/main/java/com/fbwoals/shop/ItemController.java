@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -44,5 +45,16 @@ public class ItemController {
     public String add(@ModelAttribute Item item) {
         itemRepository.save(item);
         return "redirect:/list"; // ajax 요청일 경우 불가능
+    }
+
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable Long id, Model model) {
+        var result = itemRepository.findById(id);
+        // Optional 자료형은 null 일수도 있어서 if 문으로 null 체크 필수 -> 안써도 알아서 잡아주긴 함
+        if(result.isPresent()) {
+            model.addAttribute("item", result.get());
+            return "detail.html";
+        }
+        else return "redirect:/list";
     }
 }

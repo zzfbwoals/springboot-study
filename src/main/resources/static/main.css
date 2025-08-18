@@ -38,3 +38,11 @@ input {
     width : 150px;
     margin-right : 20px;
 }
+.detail {
+    text-align : center;
+}
+.detail img{
+    max-width : 30%;
+    display : block;
+    margin : auto;
+}
