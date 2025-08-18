@@ -9,11 +9,13 @@
 </head>
 <body>
 
-    <form action="/add" method="POST"> <!-- action="/URL" mothod="요청" -->
-        <input name="title">
-        <input name="price">
-        <button type="submit">버튼</button> <!-- type="button" 은 ajax 사용할때 -->
-    </form>
+<div th:replace="~{nav.html :: navbar}"></div>
+
+<form action="/add" method="POST"> <!-- action="/URL" mothod="요청" -->
+    <input name="title">
+    <input name="price">
+    <button type="submit">버튼</button> <!-- type="button" 은 ajax 사용할때 -->
+</form>
 
 </body>
 </html>

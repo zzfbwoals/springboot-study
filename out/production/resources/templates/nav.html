@@ -9,13 +9,11 @@
 </head>
 <body>
 
-<div th:replace="~{nav.html :: navbar}"></div>
-
-<form action="/add" method="POST"> <!-- action="/URL" mothod="요청" -->
-    <input name="title">
-    <input name="price">
-    <button type="submit">버튼</button> <!-- type="button" 은 ajax 사용할때 -->
-</form>
+<div class="nav" th:fragment="navbar"> <!-- th:fragment="작명" 으로 다른 html 에서 재사용 가능 -->
+    <a class="logo">SpringMall</a>
+    <a>List</a>
+    <a>Write</a>
+</div>
 
 </body>
 </html>

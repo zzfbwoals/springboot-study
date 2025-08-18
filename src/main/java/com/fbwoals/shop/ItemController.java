@@ -32,10 +32,16 @@ public class ItemController {
         return "write.html";
     }
 
+//    @PostMapping("/add")
+//    public String add(String title, Integer price) { // @RequestParam 생략
+//        Item item = new Item();
+//        item.setTitle(title); item.setPrice(price);
+//        itemRepository.save(item);
+//        return "redirect:/list"; // ajax 요청일 경우 불가능
+//    }
+    // 위의 코드 간단 버전
     @PostMapping("/add")
-    public String add(String title, Integer price) { // @RequestParam 생략
-        Item item = new Item();
-        item.setTitle(title); item.setPrice(price);
+    public String add(@ModelAttribute Item item) {
         itemRepository.save(item);
         return "redirect:/list"; // ajax 요청일 경우 불가능
     }
