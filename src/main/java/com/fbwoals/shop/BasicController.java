@@ -32,6 +32,12 @@ public class BasicController {
     @ResponseBody // return 값이 .html 이면 안써도 됨
     public String test() {
 
+        var object = new Person("류재민", 24);
+        System.out.println(object.toString());
+        object.addAge();
+        System.out.println(object.toString());
+        object.setAge(-10);
+        System.out.println(object.toString());
         return "테스트임";
     }
 
