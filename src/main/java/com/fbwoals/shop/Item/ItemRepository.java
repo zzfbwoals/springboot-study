@@ -1,4 +1,4 @@
-package com.fbwoals.shop;
+package com.fbwoals.shop.Item;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

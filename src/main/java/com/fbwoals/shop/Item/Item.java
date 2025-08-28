@@ -1,4 +1,4 @@
-package com.fbwoals.shop;
+package com.fbwoals.shop.Item;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,10 +13,10 @@ public class Item {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // 키 값 (Primary Key), 자동 증가 (Auto Increment) 설정
     private Long id; // private 사용하고 Lombok 의 @Getter/@Setter 사용 @Setter는 유효성 검사를 위해 롬복대신 직접 함수 만들어서 검사하는 코드 추가하면 좋음
     // Integer/int 는 대충 +-20억, Long/long 은 대충 +-900경 대신 Long/long 사용 시에는 100L 이런식으로 숫자 뒤에 L 추가
-    @Column(length = 200, nullable = false) // 제약사항 입력 (최대 200 문자)
+    @Column(length = 50, nullable = false) // 제약사항 입력 (최대 200 문자)
     private String title;
     @Column(length = 200, nullable = false)
-    private Integer price;
+    private Long price;
 
 //    아래 처럼 setter는 롬복 사용대신 직접 함수로 선언해야 안전함. @Setter 는 별도의 검사 로직이 없고 바로 저장해버림.
 //    public void setTitle(String title) {

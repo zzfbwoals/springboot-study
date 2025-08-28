@@ -1,4 +1,4 @@
-package com.fbwoals.shop;
+package com.fbwoals.shop.ETC;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

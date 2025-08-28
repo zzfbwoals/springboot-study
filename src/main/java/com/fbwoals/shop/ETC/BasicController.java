@@ -1,4 +1,4 @@
-package com.fbwoals.shop;
+package com.fbwoals.shop.ETC;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,5 +46,11 @@ public class BasicController {
     public String test2() {
 
         return "test.html";
+    }
+
+    @GetMapping("/study")
+    public String study() {
+
+        return "study.html";
     }
 }
