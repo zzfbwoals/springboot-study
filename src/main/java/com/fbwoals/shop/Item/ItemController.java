@@ -1,12 +1,10 @@
 package com.fbwoals.shop.Item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor // Lombok 에서 제공 (덕분에 @Autowired 안써도 됨)
@@ -93,4 +91,11 @@ new ItemRepository(), new ItemService() 알아서 찾아와서 넣으라는 스�
         else return "redirect:/list";
     }
     // 수정 기능은 수정하고 싶은 id 값에 덮어쓰기하면 된다.
+    // 수정은 PUT 요청이 기본인데 <form> 태그는 GET POST 요청밖에 못 보내서 일단 POST 사용
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam Long id) { // Query String 매개변수는 @RequestParam 으로 받는다.
+        itemService.deleteItemById(id);
+        return ResponseEntity.status(200).body("삭제완료"); // ResponseEntity.ok().build(); 도 가능 (일반적) 프론트가 상태 응답만 보면 되는 경우
+    }
 }

@@ -2,7 +2,11 @@ package com.fbwoals.shop.ETC;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 // REST API
 // 1. Unifrom Interface: 비슷한 기능을 하는 API들은 URL과 method가 유사성, 일관성이 있어야 함.
@@ -39,6 +43,12 @@ public class BasicController {
         object.setAge(-10);
         System.out.println(object.toString());
         return "테스트임";
+    }
+
+    @PostMapping("/test1")
+    String test(@RequestBody Map<String, Object> body) {
+        System.out.println(body.get("name"));
+        return "redirect:/list";
     }
 
     @GetMapping("/test2")

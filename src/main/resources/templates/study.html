@@ -86,5 +86,68 @@ ex) <code>@NotBlank(message = "제목은 비워둘 수 없습니다") @Size(max 
 html 에서는 Thymeleaf를 사용하는 경우 <code>&lt;div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"&gt;&lt;/div&gt;</code> 의 방법으로 사용 가능하다.
 <br>
 
+<h2>파일분리?</h2>
+예전부터 파일을 Controller, Service, Domain, Repository 이런식으로 구분해서 나누었지만<br>
+테이블 기준으로 나누는게 편리하다. 예를 들어 Item 테이블이 있으면 Item 폴더를 만들어서 연관있는 클래스들을 거기에 모은다.<br>
+<br>
+
+<h2>조회기능 (GET)</h2>
+Repository 를 사용하여 findAll() 과 같은 함수를 사용해서 리스트에 저장해서 반환한다.<br>
+REST API 가 아니라 직접 html 로 전달하려면 Thymeleaf 템플릿 + Model 객체 조합을 사용한다.<br>
+<br>
+
+<h2>추가기능 (POST)</h2>
+받아온 입력한 데이터들을 Repository 의 save() 를 사용하여 저장한다. save 에는 테이블 객체를 넣는다.<br>
+테이블 객체를 초기화 하기 위해서는 Builder() 나 Lombok 의 Setter() 를 사용한다.<br>
+form 을 사용하면 GET, POST 요청을 날릴 수 있다. 하지만 PUT, DELETE 등은 AJAX 를 사용한다.<br>
+<br>
+
+<h2>수정기능 (PUT)</h2>
+받아온 입력한 데이터들은 추가기능과 동일하게 진행한다. 단, 수정하려는 데이터의 ID(PK) 값을 알아야한다.<br>
+이는 사용자에게 받아오거나 DB 에서 찾는 방법이 있다. ID(PK) 값을 알았으면 해당 ID 값을 가진 데이터에 덮어쓰기 처럼 다시 저장하면 수정완료.<br>
+<br>
+
+<h2>삭제기능 (DELETE)</h2>
+
+
+<h2>AJAX</h2>
+우리가 웹페이지에서 서버에 요청을 날리고 싶으면 방법이 크게 3개가 있습니다.<br>
+1. 주소창에 URL을 집어넣든가 (GET요청가능)<br>
+2. form 쓰든가 (GET, POST요청가능) <br>
+3. ajax를 쓰든가 (전부가능)<br>
+ajax만의 장점이 있는데 ajax쓰면 새로고침 없이도 서버로 요청을 날릴 수 있습니다.<br>
+주소창 쓰거나 form 쓰면 항상 자동 새로고침되는데 ajax는 그런거 없어서 몰래 스무스하게 요청을 날릴 수 있습니다.<br>
+어떻게 하냐면 자바스크립트로 fetch('/URL~~') 이런걸 쓰면 ajax를 이용해서 GET 요청을 날릴 수 있습니다.<br>
+<br>
+ajax로 요청 날릴 때 설정을 기입할 수도 있습니다.<br>
+- method 속성에 어떤 method로 요청할지 설정도 가능하고<br>
+- body 속성에 어떤 데이터를 서버로 보낼지 설정도 가능하고<br>
+- headers란에 전송할 데이터의 타입을 설정도 가능하고<br>
+- 전송할 데이터가 많으면 자바스크립트 array나 object 안에 담아서 전송해도 됩니다. (자바에서의 List, Map과 유사함)<br>
+근데 array나 object자료 전송할 때는 JSON.stringify() 안에 넣어서 전달하고<br>
+타입을 application/json로 기입해야 잘 전달됨<br>
+<br>
+ajax로 application/json 타입의 데이터를 보냈다면<br>
+서버에서 출력할 땐 파라미터에 @RequestBody라는거 써주면 되겠습니다.<br>
+그리고 변환할 자료형 맘대로 입력하면 되는데<br>
+자바스크립트 object 형태로 보냈다면 Map으로 간편하게 변환해서 쓰면 되겠습니다.<br>
+<br>
+<code>fetch('/abc?데이터이름=데이터값&데이터이름2=데이터값2')  </code><br>
+서버로 데이터 전송할 때 저렇게 복잡하게 적기 싫으면<br>
+query string이라는 것도 사용가능합니다.<br>
+URL에다가 이런 식으로 정보를 숨겨서 요청을 날리면<br>
+서버로 진짜로 그 데이터가 전송됩니다.<br>
+여러개 전송하려면 & 기호로 연결하면 됩니다.<br>
+서버에서 이걸 꺼내고 싶으면 (@RequestParam 타입 데이터이름) 파라미터로 꺼낼 수 있습니다.<br>
+폼전송으로 보낸 데이터처럼 똑같이 꺼낼 수 있음<br>
+그래서 데이터를 서버로 간단하게 보내고 싶을 때는 query string 써도 됩니다.<br>
+<br>
+하지만 query string은<br>
+- 자료가 길고 복잡하면 여기 적는게 오히려 더러움<br>
+- URL에 뭔가를 적는 방식이다보니까 정보가 너무 잘 보여서 코딩 모르는 사람들도 위조하기가 쉬워짐<br>
+이런 단점이 있어서 간단하고 안중요한 데이터 전송하는데 쓰는게 좋습니다.<br>
+그럼 다음 시간까지 삭제기능 알아서 만들어옵시다.<br>
+<br>
+
 </body>
 </html>

@@ -31,8 +31,14 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
+    // /detail/{id}, /edit/{id} 를 위한 메소드
     public Optional<Item> getItemById(Long id) {
 
         return itemRepository.findById(id);
+    }
+
+    // /delete 를 위한 메소드
+    public void deleteItemById(Long id) {
+        itemRepository.deleteById(id);
     }
 }

@@ -13,7 +13,7 @@
 <div th:replace="~{nav.html :: navbar}"></div>
 
 <form action="/add" method="POST"> <!-- action="/URL" mothod="요청" -->
-    <input type="hidden" name="id" th:value="${item.id}">
+    <input type="hidden" name="id" th:value="${item.id}"> <!-- style="display:none" 해도 숨길 수 있음 -->
     <input name="title" th:value="${item.title}">
     <input name="price" th:value="${item.price}">
     <button type="submit">버튼</button> <!-- type="button" 은 ajax 사용할때 -->

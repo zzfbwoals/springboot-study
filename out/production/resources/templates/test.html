@@ -9,5 +9,21 @@
 </head>
 <body>
     <h2>테스트임</h2>
+    <button class="btn">테스트용</button>
+
+    <script>
+        document.querySelectorAll('.btn')[0].addEventListener('click', function(){
+            fetch('/test2')
+        })
+        <!--
+        fetch('/test1', {
+            method : 'POST',
+            headers : {
+                "Content-Type": "application/json",
+            },
+            body : JSON.stringify({title : 'kim', price : 123})
+        })
+        -->
+    </script>
 </body>
 </html>
