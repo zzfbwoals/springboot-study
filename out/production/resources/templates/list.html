@@ -20,9 +20,11 @@ th:replace="nav.html :: navbar('데이터1', '데이터2')" 으로 데이터 전
 <div class="card" th:each="i : ${items}">
     <img src="https://placehold.co/300">
     <div>
-        <h4 th:text="${i.title}"></h4> <!-- i.title 하면 thymleaf 가 알아서 i.getTitle() 실행 -->
-        <a th:href="@{'/detail/' + ${i.id} }">링크</a>
+        <a th:href="@{'/detail/' + ${i.id} }">
+            <h4 th:text="${i.title}"></h4> <!-- i.title 하면 thymleaf 가 알아서 i.getTitle() 실행 -->
+        </a>
         <h4 th:text="${i.price} + 원"></h4>
+        <a th:href="@{'/edit/' + ${i.id} }">✏️</a>
     </div>
 </div>
 

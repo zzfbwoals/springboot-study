@@ -82,4 +82,15 @@ new ItemRepository(), new ItemService() 알아서 찾아와서 넣으라는 스�
 //            // ResponseEntity를 쓰는 경우 굳이 @ResponseBody를 붙일 필요 없습니다. 한글 보낼 때 안깨지는 것도 편리함
 //        }
 //    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        var result = itemService.getItemById(id);
+        if(result.isPresent()) {
+            model.addAttribute("item", result.get());
+            return "edit.html";
+        }
+        else return "redirect:/list";
+    }
+    // 수정 기능은 수정하고 싶은 id 값에 덮어쓰기하면 된다.
 }
