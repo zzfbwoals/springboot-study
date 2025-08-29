@@ -15,7 +15,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     // /add 를 위한 메소드
-    public void saveItem(@ModelAttribute Item item) {
+    public void saveItem(Item item) {
         if (item.getPrice() < 0) {
             throw new RuntimeException("음수 안됩니다");
         }
