@@ -25,11 +25,18 @@ th:replace="nav.html :: navbar('데이터1', '데이터2')" 으로 데이터 전
         </a>
         <h4 th:text="${i.price} + 원"></h4>
         <a th:href="@{'/edit/' + ${i.id} }">✏️</a>
-        <span th:onclick="fetch('/delete?id=[[${i.id}]]', { method : 'DELETE' } )">🗑️</span>
+        <span th:onclick="fetch('/delete?id=[[${i.id}]]', { method : 'DELETE' })
+    .then(r => r.text())
+    .then(message => {
+        alert(message);
+        window.location.reload();
+    })
+    .catch(error => alert('삭제 중 오류가 발생했습니다.'))">🗑️</span>
         <!-- JS 안에 타임리프 변수를 넣으려면 [[${ 변수 }]] 이런 식으로 넣어야 함
          근데 <span onclick="fetch('/item?id=[[${i.id}]]', { method : 'DELETE' } )"> 이렇게 하면 삭제만 되고
          새로고침이 안된다. 서버 측에서 리다이렉트는 AJAX 인 경우 사용할 수 없다. 즉 fetch() 안에서 리다이렉트 설정을 해줘야 함.
          -->
+        <!-- alert() 함수는 서버에서 보내준 메세지를 알려줌 (창을 띄어서) -->
     </div>
 </div>
 

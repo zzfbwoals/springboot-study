@@ -57,10 +57,4 @@ public class BasicController {
 
         return "test.html";
     }
-
-    @GetMapping("/study")
-    public String study() {
-
-        return "study.html";
-    }
 }
