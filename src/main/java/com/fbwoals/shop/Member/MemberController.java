@@ -23,4 +23,9 @@ public class MemberController {
         memberService.saveMember(member);
         return "redirect:/list";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login.html";
+    }
 }

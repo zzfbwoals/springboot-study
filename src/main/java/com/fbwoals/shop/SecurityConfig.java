@@ -21,6 +21,12 @@ public class SecurityConfig {
                 authorize.requestMatchers("/**").permitAll()
         );
         // 로그인이 없어도 요청할 수 있는 URL 설정
+        http.formLogin((formLogin) -> formLogin.loginPage("/login")
+                .defaultSuccessUrl("/")
+                .failureUrl("/fail")
+        );
+        // 앞으로 폼으로 로그인 하겠다. 성공이나 실패시 이동할 페이지 url 설정 가능
+        // springsecurity는 기본적으로 로그인 실패시 /login?error 로 이동
         return http.build();
     }
 

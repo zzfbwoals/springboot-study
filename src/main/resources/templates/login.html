@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>로그인</title>
+    <link href="/main.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{nav.html :: navbar}"></div>
+
+<form action="/login" method="POST">
+    <input name="username">
+    <input name="password" type="password">
+    <button type="submit">전송</button>
+</form>
+
+<!--
+아이디랑 비번 중 뭐가 틀렸는지 알려주는건 보안상 좋지 않음
+/login?error=true 일때 아래 글이 나옴
+ -->
+<div th:if="${param.error}">
+    <h4>아이디나 비번 틀림</h4>
+</div>
+
+</body>
+</html>
