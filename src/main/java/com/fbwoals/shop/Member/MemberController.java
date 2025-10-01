@@ -2,11 +2,13 @@ package com.fbwoals.shop.Member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.SQLOutput;
 
@@ -38,13 +40,15 @@ public class MemberController {
 
     // 로그인 중인 유저 확인
     @GetMapping("/my-page")
-    public String myPage(Authentication auth) {
+    @ResponseBody
+    public void myPage(@AuthenticationPrincipal CustomUser user) {
 
-        System.out.println(auth);
-        System.out.println(auth.getName()); // 아이디 출력
-        System.out.println(auth.isAuthenticated()); // 로그인 여부 출력
-        System.out.println(auth.getAuthorities().contains(new SimpleGrantedAuthority("User")));
-        return "mypage.html";
+        System.out.println(user.displayName);
+
+
+//        System.out.println(auth.getName()); // 아이디 출력
+//        System.out.println(auth.isAuthenticated()); // 로그인 여부 출력
+//        System.out.println(auth.getAuthorities().contains(new SimpleGrantedAuthority("User")));
     }
 
 }

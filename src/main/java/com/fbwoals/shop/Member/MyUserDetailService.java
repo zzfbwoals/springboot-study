@@ -3,7 +3,6 @@ package com.fbwoals.shop.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,7 +29,9 @@ public class MyUserDetailService implements UserDetailsService {
         // if 문을 통해 관리자, 판매자 들의 역할도 구분해서 부여 가능
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("User"));
-        return new User(user.getUsername(), user.getPassword(), authorities);
+        CustomUser customUser = new CustomUser(user.getUsername(), user.getPassword(), authorities);
+        customUser.displayName = user.getDisplayName();
+        return customUser;
     }
 
 }

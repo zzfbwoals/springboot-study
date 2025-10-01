@@ -34,6 +34,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
 	// 콘솔에 임시 비밀번호 주어짐 아이디는 user
+
+	// DB에 세션 데이터를 저장하기 위함
+	// implementation 'org.springframework.session:spring-session-jdbc'
 }
 
 tasks.named('test') {

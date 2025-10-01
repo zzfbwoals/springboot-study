@@ -36,9 +36,7 @@ new ItemRepository(), new ItemService() 알아서 찾아와서 넣으라는 스�
     }
 
     @GetMapping("/write")
-    public String write() {
-        return "write.html";
-    }
+    public String write(Authentication auth) { return "write.html"; }
 
 //    @PostMapping("/add")
 //    public String add(String title, Integer price) { // @RequestParam 생략
@@ -55,7 +53,6 @@ new ItemRepository(), new ItemService() 알아서 찾아와서 넣으라는 스�
         // 대신 @Service로 빈 등록하고 Controller 클래스에서 private final로 변수 정의하는 과정 필요
         // new ItemService().saveItem() 하는 방법도 있긴한데 /add 요청마다 object 새로 뽑아야해서 비효율적
         // itemRepository.save(item);
-        if(auth == null) return "redirect:/login";
         itemService.saveItem(item, auth); // itemService 사용
         return "redirect:/list"; // ajax 요청일 경우 불가능
     }
@@ -84,20 +81,30 @@ new ItemRepository(), new ItemService() 알아서 찾아와서 넣으라는 스�
 //    }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable Long id, Model model) {
+    public String edit(@PathVariable Long id, Model model, Authentication auth) {
         var result = itemService.getItemById(id);
-        if(result.isPresent()) {
-            model.addAttribute("item", result.get());
-            return "edit.html";
+        if (result.isPresent()) {
+            Item item = result.get();
+            // null check 추가
+            if (item.getUser() != null && item.getUser().equals(auth.getName())) {
+                model.addAttribute("item", item);
+                return "edit.html";
+            }
         }
-        else return "redirect:/list";
+        return "redirect:/list";
     }
+
     // 수정 기능은 수정하고 싶은 id 값에 덮어쓰기하면 된다.
     // 수정은 PUT 요청이 기본인데 <form> 태그는 GET POST 요청밖에 못 보내서 일단 POST 사용
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> delete(@RequestParam Long id) { // Query String 매개변수는 @RequestParam 으로 받는다.
-        itemService.deleteItemById(id);
-        return ResponseEntity.status(200).body("삭제완료"); // ResponseEntity.ok().build(); 도 가능 (일반적) 프론트가 상태 응답만 보면 되는 경우
+    public ResponseEntity<String> delete(@RequestParam Long id, Authentication auth) {
+        boolean isDeleted = itemService.deleteItemById(id, auth);
+        if (isDeleted) {
+            return ResponseEntity.ok("삭제가 완료되었습니다.");
+        } else {
+            return ResponseEntity.status(403).body("삭제 권한이 없습니다.");
+        }
     }
+
 }

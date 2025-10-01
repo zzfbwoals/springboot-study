@@ -46,7 +46,16 @@ public class ItemService {
     }
 
     // /delete 를 위한 메소드
-    public void deleteItemById(Long id) {
-        itemRepository.deleteById(id);
+    public boolean deleteItemById(Long id, Authentication auth) {
+        var result = itemRepository.findById(id);
+        if(result.isPresent()) {
+            Item item = result.get();
+            if(item.getUser() != null && item.getUser().equals(auth.getName())) {
+                itemRepository.deleteById(id);
+                return true;
+            }
+        }
+        return false;
     }
+
 }

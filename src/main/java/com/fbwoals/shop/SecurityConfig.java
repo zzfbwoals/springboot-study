@@ -16,10 +16,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.disable());
         // csrf 보안 끄는거
-        // csrf 공격은 다른 사이트에서 우리 사이트를 몰래 이용할 수 있께 할 수 있는데 JWT 쓰면 ajax 요청 시 headers 에 서버에서 발금하는 랜덤문자 넣어서 확인 가능
+        // csrf 공격은 다른 사이트에서 우리 사이트를 몰래 이용할 수 있께 할 수 있는데 JWT 쓰면 ajax 요청 시 headers 에 서버에서 발급하는 랜덤문자 넣어서 확인 가능
         http.authorizeHttpRequests((authorize) ->
                 authorize
-                        .requestMatchers("/login", "/signup", "/main.css").permitAll()
+                        .requestMatchers("/login", "/signup", "/main.css", "/list").permitAll()
                         .anyRequest().authenticated() // 나머지 모든 요청은 인증 필요 -> 로그인 없이 접속 시도할 경우 자동으로 /login 리다이렉트
         );
         // 로그인이 없어도 요청할 수 있는 URL 설정
@@ -31,6 +31,25 @@ public class SecurityConfig {
         );
         // 앞으로 폼으로 로그인 하겠다. 성공이나 실패시 이동할 페이지 url 설정 가능
         // springsecurity는 기본적으로 로그인 실패시 /login?error 로 이동
+
+        // 로그아웃 시 원래 있던 url로 리다이렉트
+        http.logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    String refererUrl = request.getHeader("Referer");
+                    String redirectUrl = "/";
+
+                    if (refererUrl != null && !refererUrl.contains("/login")) {
+                        redirectUrl = refererUrl;
+                    }
+
+                    response.sendRedirect(redirectUrl);
+                })
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+        );
+
         return http.build();
     }
 
