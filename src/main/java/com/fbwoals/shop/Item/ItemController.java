@@ -2,6 +2,7 @@ package com.fbwoals.shop.Item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,13 +49,14 @@ new ItemRepository(), new ItemService() 알아서 찾아와서 넣으라는 스�
 //    }
     // 위의 코드 간단 버전
     @PostMapping("/add")
-    public String add(@ModelAttribute Item item) {
+    public String add(@ModelAttribute Item item, Authentication auth) {
         // itemRepository.save(item); DB 입출력 기능 함수들은 Service 클래스로 분리해서 저장
         // -> 하나의 클래스에 비슷한 기능의 함수들만 보관하는게 나중에 찾기 쉬움
         // 대신 @Service로 빈 등록하고 Controller 클래스에서 private final로 변수 정의하는 과정 필요
         // new ItemService().saveItem() 하는 방법도 있긴한데 /add 요청마다 object 새로 뽑아야해서 비효율적
         // itemRepository.save(item);
-        itemService.saveItem(item); // itemService 사용
+        if(auth == null) return "redirect:/login";
+        itemService.saveItem(item, auth); // itemService 사용
         return "redirect:/list"; // ajax 요청일 경우 불가능
     }
 

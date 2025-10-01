@@ -17,6 +17,7 @@ public class Item {
     private String title;
     @Column(length = 200, nullable = false)
     private Long price;
+    private String user;
 
 //    아래 처럼 setter는 롬복 사용대신 직접 함수로 선언해야 안전함. @Setter 는 별도의 검사 로직이 없고 바로 저장해버림.
 //    public void setTitle(String title) {

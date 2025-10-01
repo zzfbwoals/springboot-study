@@ -1,26 +1,39 @@
 package com.fbwoals.shop.Member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-//@Service
-//@RequiredArgsConstructor
-//public class MyUserDetailService implements UserDetailsService {
-//
-//    private final MemberRepository memberRepository;
-//
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//
-//        var Member = memberRepository.findById(username);
-//        return new
-//    }
-//
-//}
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class MyUserDetailService implements UserDetailsService {
+
+    private final MemberRepository memberRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        var result = memberRepository.findById(username);
+        if(result.isEmpty()) throw new UsernameNotFoundException("아이디 없음");
+        var user = result.get();
+
+        // 유저 권한 설정
+        // 권한에 따라 유저들을 분류하기 위함
+        // if 문을 통해 관리자, 판매자 들의 역할도 구분해서 부여 가능
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("User"));
+        return new User(user.getUsername(), user.getPassword(), authorities);
+    }
+
+}
 
 /*
 - 유저가 폼으로 아이디/비번 제출시 비번 맞는지 검사 같은 것도 자동으로 해주는데

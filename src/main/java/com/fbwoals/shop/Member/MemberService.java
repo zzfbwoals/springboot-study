@@ -2,6 +2,7 @@ package com.fbwoals.shop.Member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,4 +52,5 @@ public class MemberService {
             throw new RuntimeException("이미 존재하는 아이디입니다.");
         }
     }
+
 }

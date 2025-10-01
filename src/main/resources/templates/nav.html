@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -13,6 +13,11 @@
     <a class="logo">SpringMall</a>
     <a th:href="@{'/list'}">List</a>
     <a th:href="@{'/write'}">Write</a>
+    <div sec:authorize="isAuthenticated()">
+        <span sec:authentication="principal.username"></span>
+        <span sec:authentication="principal.authorities"></span>
+        <a href="/logout">로그아웃</a>
+    </div>
 </div>
 
 </body>
