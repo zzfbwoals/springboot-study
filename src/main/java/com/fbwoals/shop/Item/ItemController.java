@@ -1,6 +1,7 @@
 package com.fbwoals.shop.Item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -30,9 +31,11 @@ new ItemRepository(), new ItemService() 알아서 찾아와서 넣으라는 스�
     public String list(Model model) { // Thymeleaf 를 사용하기 위한 Model 객체를 전달
 //        var result = itemRepository.findAll(); // List<Item> 자료형
 //        model.addAttribute("items", result); // name 에 홍길동을 저장 -> html 에서 ${name} 으로 사용가능
-        var result = itemService.getItemFindAll(); // itemService 사용
-        model.addAttribute("items", result);
-        return "list.html";
+//        var result = itemService.getItemFindAll(); // itemService 사용
+//        model.addAttribute("items", result);
+//        return "list.html";
+        // 모든 글을 가져오는 대신, 페이지네이션된 첫 번째 페이지로 리다이렉트합니다.
+        return "redirect:/list/page/1";
     }
 
     @GetMapping("/write")
@@ -105,6 +108,17 @@ new ItemRepository(), new ItemService() 알아서 찾아와서 넣으라는 스�
         } else {
             return ResponseEntity.status(403).body("삭제 권한이 없습니다.");
         }
+    }
+
+    @GetMapping("/list/page/{page}")
+    public String getListPage(@PathVariable Integer page, Model model) {
+
+        var result = itemService.getItemByPage(page);
+        System.out.println(result.getTotalPages()); // 총 몇페이지 있는지
+        System.out.println(result.hasNext()); // 다음 페이지가 있는지
+        model.addAttribute("items", result);
+        model.addAttribute("pages", result);
+        return "list.html";
     }
 
 }

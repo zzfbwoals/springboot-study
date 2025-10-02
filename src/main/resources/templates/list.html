@@ -40,6 +40,15 @@ th:replace="nav.html :: navbar('데이터1', '데이터2')" 으로 데이터 전
     </div>
 </div>
 
+<div class="pagination-container" style="text-align: center; margin-top: 50px;">
+    <a th:each="pageNumber : ${#numbers.sequence(1, pages.totalPages)}"
+       th:href="@{'/list/page/' + ${pageNumber}}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber - 1 == pages.number} ? 'active-page' : ''"
+       style="margin: 0 5px; padding: 5px 10px; text-decoration: none; border: 1px solid #ccc; border-radius: 3px;">
+    </a>
+</div>
+
 <!--
 위의 반복문으로 대체 가능
 <div class="card">

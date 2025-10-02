@@ -2,6 +2,8 @@ package com.fbwoals.shop.Item;
 
 import com.fbwoals.shop.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -56,6 +58,10 @@ public class ItemService {
             }
         }
         return false;
+    }
+
+    public Page<Item> getItemByPage(Integer page) {
+        return itemRepository.findPageBy(PageRequest.of(page-1, 5));
     }
 
 }
